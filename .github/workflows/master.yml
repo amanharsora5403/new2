@@ -38,10 +38,7 @@ jobs:
       run: |
         docker push amanharsora543211/project:${{ github.sha }}
 
-# Step 5: Push the image to Docker Hub (optional step, if you want to store the image)
-    - name: Push Docker image to Docker Hub
-      run: |
-        docker push my-web-app:latest
+
 
     # Step 6: Deploy the Docker container to the target server (e.g., AWS, DigitalOcean, etc.)
     # This example uses SSH to deploy on a remote server (you must set up SSH keys as GitHub Secrets)
@@ -54,11 +51,11 @@ jobs:
         port: 22
         script: |
           # Pull the latest Docker image from Docker Hub (if pushing to Docker Hub)
-          docker pull my-web-app:latest
+          docker pull amanharsora543211/project:${{ github.sha }}
           
           # Stop and remove any running containers (if necessary)
           docker stop my-web-app || true
           docker rm my-web-app || true
           
           # Run the Docker container (you can customize ports and volumes as needed)
-          docker run -d -p 80:80 --name my-web-app my-web-app:latest
+          docker run -d -p 80:80 --name my-web-app amanharsora543211/project:${{ github.sha }}
